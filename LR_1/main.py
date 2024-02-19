@@ -24,7 +24,7 @@ class EchoBot:
                 self.engine.setProperty('voice', voice.id)
 
         # Set voice rate
-        self.engine.setProperty('rate', 100)
+        self.engine.setProperty('rate', 150)
         # set voice volume
         self.engine.setProperty('volume', 1)
 
@@ -141,16 +141,22 @@ class EchoBot:
 
         # Loop for setting
         while True:
+            # User setting chose
             choise = input("Вибір:")
 
+            # Chose selection
             if choise.lower() in ["1", "голос", "мова"]:
+                # Voice settings
                 self.__set_voice()
             elif choise.lower() in ["2", "швидкість проговорення"]:
+                # Voice rate settings
                 self.__set_rate()
             elif choise.lower() in ["3", "гучність"]:
+                # Volume settings
                 self.__set_volume()
             elif choise.lower() in ["4", "завершити"]:
                 return True
+            # Chose error
             else:
                 message = "Немає такого налаштування спробуйте ше раз"
                 self.__bot_response(message)
@@ -161,10 +167,10 @@ class EchoBot:
     def __chat(self, type: int) -> bool:
         # Loop until user decided to exit
         while True:
-            # Get message from user
+            # Get message from user speach
             if type == 1:
                 with sr.Microphone() as source:
-                    print("Повідомлення: ")
+                    print("Слухаю....")
                     self.recognizer.adjust_for_ambient_noise(source)
                     audio = self.recognizer.listen(source)
 
@@ -175,6 +181,9 @@ class EchoBot:
                 except sr.RequestError as e:
                     print("Помилка при отриманні результатів від Google Speech Recognition service; {0}".format(e))
 
+                print(f"Повідомлення: {user_input}")
+
+            # Get message from user text
             if type == 2:
                 user_input = str(input("Message: "))
 
